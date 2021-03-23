@@ -90,4 +90,68 @@ names(managers_data)[12] <- "Mean Value"
 #show the structure of dataframe
 str(managers_data)
 managers_data
+# convert current date chr variable to a date type var
+
+converted_date <- as.Date(managers_data$Date, "%m/%d/%y")
+converted_date
+str(converted_date)
+
+managers_data$Date <- converted_date
+
+managers_data
+
+
+# Dealing with Missing Data
+
+# Listwise deletion = remove any rows that contain NA
+new_managers_data <- na.omit(managers_data)
+
+new_managers_data
+
+
+# Use complete.cases
+complete_managers_data <- complete.cases(managers_data)
+
+complete_managers_data
+sum(complete_managers_data)
+
+#List rows not having NAN
+complete_managers_data <- managers_data[complete.cases(managers_data),]
+complete_managers_data
+
+# list rows with missing vals
+managers_data[!complete.cases(managers_data),]
+
+#show summary of all missing vals in a variable
+sum(is.na(managers_data$Age))
+sum(is.na(managers_data$`Mean Value`))
+
+#Install and use the mice package to how the missing variables in the dtaframe
+install.packages('mice')
+library(mice)
+md.pattern(managers_data)
+
+# Use VIM package to show missing values
+install.packages("VIM")
+library(VIM)
+missing_values <- aggr(managers_data, prop = FALSE, numbers = TRUE)
+# Show summary of the contents of missing_values
+summary(missing_values)
+# See this link for more info https://www.rdocumentation.org/packages/VIM/versions/4.8.0/topics/aggr 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
